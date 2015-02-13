@@ -6,12 +6,14 @@ var Q = require('q');
 var apiKey = '6df499a91475e28d7e566c03f92c5d08';
 var router = express.Router();
 var request = require('request');
-var testUrl = 'http://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&artist=metallica&api_key=' + apiKey + '&format=json';
+var baseUrl = 'http://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&artist='
+//var testUrl = 'http://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&artist=metallica&api_key=' + apiKey + '&format=json';
 
-function loadData() {
+function loadData(artist) {
+  var url = baseUrl + artist + '&api_key=' + apiKey + '&format=json';
   var deferred = Q.defer();
   var finalData = {};
-  request(testUrl, function (error, response) {
+  request(url, function (error, response) {
     if (error) {
       return deferred.reject(new Error(error))
     }
@@ -21,11 +23,11 @@ function loadData() {
   return deferred.promise;
 }
 
-router.get('/', function (req, res, next) {
-  loadData()
+router.get('/:artist', function (req, res, next) {
+  var artist = req.params.artist.substring(1);
+  loadData(artist)
     .then(function (response) {
       var albums = response.topalbums;
-      console.log('albums api:', albums);
       res.json(albums);
     }, function (error) {
       res.json({
