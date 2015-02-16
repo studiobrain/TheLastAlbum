@@ -7,7 +7,7 @@ var Q = require('q');
 var apiKey = config.getKey();
 var router = express.Router();
 var request = require('request');
-var baseUrl = 'http://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&artist='
+var baseUrl = 'http://ws.audioscrobbler.com/2.0/?method=artist.search&artist=';
 
 function loadData(artist) {
   var url = baseUrl + artist + '&api_key=' + apiKey + '&format=json';
@@ -18,7 +18,7 @@ function loadData(artist) {
       return deferred.reject(new Error(error))
     }
     finalData = JSON.parse(response.body);
-    deferred.resolve(finalData);
+    deferred.resolve(finalData.results);
   })
   return deferred.promise;
 }
@@ -27,8 +27,8 @@ router.get('/:artist', function (req, res, next) {
   var artist = req.params.artist.substring(1);
   loadData(artist)
     .then(function (response) {
-      var albums = response.topalbums;
-      res.json(albums);
+      var artistResults = response.artistmatches;
+      res.json(artistResults);
     }, function (error) {
       res.json({
         'error': error

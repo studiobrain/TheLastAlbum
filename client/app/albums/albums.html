@@ -1,3 +1,11 @@
-<div class="col-md-12">
-This is the albums view.
+<header>The Last Album</header>
+<div class="searchBox">
+  <input ng-model="searchInput" type="text" ng-keyup="artistSearch()" />
+  <button class="findArtist" ng-click="findArtist();"></button>
 </div>
+<p>{{searchMessage}}</p>
+<section>
+  <ul>
+    <li ng-repeat="result in artistsResult"><img ng-src="{{getThumb(result)}}" />{{result.name}}</li>
+  </ul>
+</section>
