@@ -177,6 +177,18 @@ section {
     text-shadow: rgba(225, 225, 225, 0.15) 1px 1px 0px;
   }
 }
+footer {
+  position: relative;
+  float: left;
+  top: 205px;
+  width: 100%;
+  text-align: center;
+  height: 200px;
+  padding-top: 25px; 
+  font-family: proxima-light;
+  font-size: 21px;
+  color: #999;
+}
 #loading-bar .bar {
   background: #00ffff !important;
   height: 8px !important

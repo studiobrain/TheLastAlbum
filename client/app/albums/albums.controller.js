@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('theLastAlbumApp')
-  .controller('AlbumsCtrl', ['$scope', 'ArtistService', 'AlbumService',
-    function ($scope, ArtistService, AlbumService) {
+  .controller('AlbumsCtrl', ['$scope', 'ArtistService', 'AlbumService', '$window',
+    function ($scope, ArtistService, AlbumService, $window) {
 
       $scope.searchInput = '';
       $scope.currentArtist = '';
@@ -26,8 +26,6 @@ angular.module('theLastAlbumApp')
                 $scope.getThumbs();
               }
               console.log('ROCK ON ARTISTS!:', $scope.artistsResult);
-              
-
             }, function (error) {
               console.log('Erroneous:', error);
             });
@@ -43,6 +41,9 @@ angular.module('theLastAlbumApp')
           AlbumService.get($scope.currentArtist)
             .then(function (response) {
               $scope.albumsResult = response.data.album;
+              if ($scope.albumsResult === undefined) {
+                $window.alert('Bummer!  We cant find any albums based on that artist/combo...'); 
+              }
               console.log('ROCK ON ALBUMS!:', $scope.albumsResult);
             }, function (error) {
               console.log('Erroneous:', error);
@@ -61,16 +62,5 @@ angular.module('theLastAlbumApp')
             console.log('default image');
           }
         }
-        
-        
-        
-        
-//        var imageCheck = result.image[2][Object.keys(result.image[2])[0]];
-//        if (typeof imageCheck !== 'undefined' && imageCheck) {
-//          console.log(imageCheck);
-//          return imageCheck;
-//        } else {
-//          console.log('no image');
-//        }
       };
 }]);
