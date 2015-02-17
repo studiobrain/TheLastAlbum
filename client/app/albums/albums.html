@@ -1,11 +1,17 @@
-<header>The Last Album</header>
-<div class="searchBox">
-  <input ng-model="searchInput" type="text" ng-keyup="artistSearch()" />
-  <button class="findArtist" ng-click="findArtist();"></button>
-</div>
-<p>{{searchMessage}}</p>
+<header>
+  <h2>The L<span><i class="fa fa-lastfm"></i></span>t Album</h2>
+  <div class="searchBox">
+    <input ng-model="searchInput" type="text" placeholder="artist search" />
+    <button class="findArtist" ng-click="findArtist();"></button>
+  </div>
+  
+</header>
 <section>
-  <ul>
-    <li ng-repeat="result in artistsResult"><img ng-src="{{getThumb(result)}}" />{{result.name}}</li>
-  </ul>
+  <p class="message">{{searchMessage}}</p>
+  <div class="artist" ng-repeat="result in artistsResult" ng-click="getAlbums(result);">
+    <div class="imgWrapper">
+      <img ng-src="{{result.image}}" />
+    </div>
+    <h3>{{result.name}}</h3>
+  </div>
 </section>

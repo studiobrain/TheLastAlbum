@@ -8,6 +8,7 @@ angular.module('theLastAlbumApp')
       $scope.currentArtist = '';
       $scope.artistsResult = {};
       $scope.albumsResult = {};
+      $scope.searchMessage = 'choose wisely';
       $scope.errorMessage = '';
 
       $scope.findArtist = function () {
@@ -22,11 +23,11 @@ angular.module('theLastAlbumApp')
                 return;
               } else {
                 $scope.searchMessage = 'Found ' + $scope.artistsResult.length + ' artists matching: ' + $scope.currentArtist;
+                $scope.getThumbs();
               }
               console.log('ROCK ON ARTISTS!:', $scope.artistsResult);
-              console.log('ROCK ON ARTISTS!:', $scope.artistsResult[0].image[0]);
-              $scope.getThumb($scope.artistsResult);
-            
+              
+
             }, function (error) {
               console.log('Erroneous:', error);
             });
@@ -35,9 +36,11 @@ angular.module('theLastAlbumApp')
         }
       };
 
-      $scope.getAlbums = function () {
+      $scope.getAlbums = function (result) {
+        console.log('result', result.name);
+        $scope.currentArtist = result.name;
         if ($scope.currentArtist !== undefined) {
-          AlbumService.get($scope.searchInput)
+          AlbumService.get($scope.currentArtist)
             .then(function (response) {
               $scope.albumsResult = response.data.album;
               console.log('ROCK ON ALBUMS!:', $scope.albumsResult);
@@ -46,12 +49,28 @@ angular.module('theLastAlbumApp')
             });
         }
       };
-      
-      $scope.getThumb = function(result) {
-        if (result.image !== undefined) {
-          return result.image[2][Object.keys(result.image[2])[0]];
-        } else {
-         console.log('no image'); 
+
+      $scope.getThumbs = function () {
+        for (var i = 0; i < $scope.artistsResult.length; i++) {
+          var imageCheck = $scope.artistsResult[i].image[2][Object.keys($scope.artistsResult[i].image[2])[0]];
+          if (typeof imageCheck !== 'undefined' && imageCheck) {
+            console.log(imageCheck);
+            $scope.artistsResult[i].image = imageCheck;
+          } else {
+            //$scope.artistsResult.image = $scope.default;
+            console.log('default image');
+          }
         }
+        
+        
+        
+        
+//        var imageCheck = result.image[2][Object.keys(result.image[2])[0]];
+//        if (typeof imageCheck !== 'undefined' && imageCheck) {
+//          console.log(imageCheck);
+//          return imageCheck;
+//        } else {
+//          console.log('no image');
+//        }
       };
 }]);
