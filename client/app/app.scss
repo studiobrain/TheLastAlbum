@@ -117,7 +117,7 @@ section {
 }
 .message {
   font-family: proxima-light;
-  font-size: 21px;
+  font-size: 18px;
   padding: 0px 10px 30px 10px;
   color: #fff;
   position: relative;
@@ -150,6 +150,7 @@ section {
     filter: grayscale(100%);
     -webkit-filter: grayscale(100%);
     overflow: hidden;
+    background-color: #666666;
     img {
       width: 129px;
       height: 129px;
@@ -170,11 +171,13 @@ section {
     font-weight: normal;
     text-decoration: inherit;
     position: absolute;
-    font-size: 120px;
+    font-size: 70px;
     color: #222;
-    top: 0px;
     right: 20px;
     text-shadow: rgba(225, 225, 225, 0.15) 1px 1px 0px;
+    
+    top: 25px;
+    right: 10px;
   }
 }
 footer {
