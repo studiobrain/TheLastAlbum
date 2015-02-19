@@ -8,7 +8,8 @@ angular.module('theLastAlbumApp')
       $scope.currentArtist = '';
       $scope.artistsResult = {};
       $scope.albumsResult = {};
-      $scope.searchMessage = 'choose wisely';
+      $scope.artistMessage = 'choose wisely';
+      $scope.albumMessage = '';
       $scope.errorMessage = '';
       $scope.searchBox = document.querySelector('.top');
       $scope.artistSection = document.querySelector('.artists');
@@ -17,16 +18,15 @@ angular.module('theLastAlbumApp')
       $scope.findArtist = function () {
         if ($scope.searchInput !== undefined) {
           $scope.currentArtist = $scope.searchInput;
-          $scope.searchMessage = 'Finding artists matching: ' + $scope.currentArtist;
+          $scope.artistMessage = 'Finding artists matching: ' + $scope.currentArtist;
           ArtistService.get($scope.currentArtist)
             .then(function (response) {
               $scope.artistsResult = response.data.artist;
               if ($scope.artistsResult === undefined) {
-                $scope.searchMessage = 'Umm...  Thats a new one to us!  Indie band maybe?';
+                $scope.artistMessage = 'Umm...  Thats a new one to us!  Indie band maybe?';
                 return;
               } else {
-                
-                $scope.searchMessage = 'Found ' + $scope.artistsResult.length + ' artists matching: ' + $scope.currentArtist;
+                $scope.artistMessage = 'Found ' + $scope.artistsResult.length + ' artists matching: ' + $scope.currentArtist;
                 $scope.getThumbs($scope.artistsResult);
               }
               //console.log('ROCK ON ARTISTS!:', $scope.artistsResult);
@@ -72,16 +72,14 @@ angular.module('theLastAlbumApp')
           AlbumService.get($scope.currentArtist)
             .then(function (response) {
               $scope.albumsResult = response.data.album;
-              
-              //$scope.artistSection.classList.add('hidden');
-              //$scope.albumSection.classList.add('revealed');
               if ($scope.albumsResult === undefined) {
                 $window.alert('Bummer!  We cant find any albums based on that artist/combo...'); 
               }
               //console.log('ROCK ON ALBUMS!:', $scope.albumsResult);
+              $scope.albumSection.style.display = 'block';
               $scope.slideButtons();
               $scope.getThumbs($scope.albumsResult);
-              $scope.searchMessage = 'Found ' + $scope.albumsResult.length + ' albums matching: ' + $scope.currentArtist;
+              $scope.albumMessage = 'Found ' + $scope.albumsResult.length + ' albums matching: ' + $scope.currentArtist;
             }, function (error) {
               console.log('Erroneous:', error);
             });

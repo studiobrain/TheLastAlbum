@@ -185,6 +185,9 @@ section {
   padding-bottom: 50px;
   width: 100%;
 }
+section.albums {
+  display: none;
+}
 .message {
   font-family: proxima-light;
   font-size: 18px;

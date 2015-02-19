@@ -12,7 +12,7 @@
   </div>
 </header>
 <section class="artists">
-  <p class="message">{{searchMessage}}</p>
+  <p class="message">{{artistMessage}}</p>
   <div class="artist" ng-repeat="result in artistsResult" ng-click="getAlbums(result);">
     <div class="imgWrapper">
       <img ng-src="{{result.image}}" />
@@ -21,7 +21,7 @@
   </div>
 </section>
 <section class="albums">
-  <p class="message">{{searchMessage}}</p>
+  <p class="message">{{albumMessage}}</p>
   <div class="album" ng-repeat="album in albumsResult">
     <div class="imgWrapper">
       <img ng-src="{{album.image}}" />
